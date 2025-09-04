@@ -1,0 +1,28 @@
+{
+  "name": "Form Daily Input Ritase",
+  "short_name": "Produksi",
+  "description": "Form Daily Input Ritase shift 1/2, bisa offline",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0f172a",
+  "theme_color": "#0f172a",
+  "icons": [
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAABfklEQVRYR+2Wv0sDQRCHP0Z0CeZVYF8Er0AbUGA6HBAUhSAjIgmJQvAHcZ0Q4gU0MD4vCUKDywS/KBsZL7dfB7TkzMzc2Zntm7u3N3R+rrgBcYFexV+ADrgLRAEqH3nLvxR5X2K4B/C2cA5z2D8jZqwzJ3A78mW9Tq7y1+7MbwBfJ6HxAewL6u6QLvAIs7O44BCiZB1O+H5pCAx4Ab4x6r6+IrwMI8j2mmINZ5HfR/Hk4k4FVwGvJdBqj0B7cZ9zIwVjX9sN3xj8EBbSuVxG1CZw1G07/EHshhRRmk7XJx0XHuD0x7bkDfp8vQ1Vqslr+X+EL5/vW9+LoHwMRxv0rG+krY6IdcB9fKBD3QyKQ0IAvM/ktOAbflV1hUGsP2r93knvHvsK1JH3ZgnMiDJ+l95iVcvIE4B65kVGnUPA74AAAAASUVORK5CYII=",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAYAAAA6/NlyAAABf0lEQVRYR+2YvU4DMRBFH0V6C+Ylkg/ggS+gZ5FVgBwUShsELZCC0W4sEc9lZy8IBniqYl3bE0ffB6pJ2bfFvKXH8QisAxU9AG/A3fABvAFuAvYhXfD9pAi8U2HgD/gHzgVHgDvwA+4BZ7F/qpUAH6BdcBO4A74C34hrhUdjCnYIh2ij8Ac8D9LkqzAX6m7rXYxczjA3eUp7u+uQx32UXiD0c71L2nXhmuEAfZ2Nn3zzX+QAHtLP7m0AiwCIh+WyCt1QGx8Ai2R1h6WlsBncA0sKTrP5x7nXrME6QBc/6iHygFJg8ClxGnwn8DY6u1VTxkeWefLFwJ7gJw7F/h/f0nF9Cu3iNZ9QvgySPuOiEXt9n0o2oU3wd4N9m7oI6DEx5rVwH7eMHvY1mf0u7jGLjATQH9TvT0Cjx9l4QMXAJGv8QDcOEOI+ZkgkF8b+Qp7nDGZ6BzwAAAAASUVORK5CYII=",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAABGklEQVR4Xu3TsQ3AIAxE0bn//6tRk2NMaak+IuN2IMRcGJE/1bQQAABBBAAAEEEDgC9pA1F1XgDgDfwH+AbwCj0Ok+R0Y8L+wHu6APgHHgBfAP+Ay+CP04M8wKfBAAAAABJRU5ErkJggg==",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "splash_pages": null
+}
