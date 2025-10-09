@@ -125,50 +125,72 @@ input:focus,select:focus{
 }
 
 #headerLogo {
-  position: fixed;
-  top: 10px;
-  left: 10px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: 12px; /* jarak antara logo dan teks */
-  z-index: 9999;
-  background: rgba(15,23,42,0.4); /* transparan elegan */
-  padding: 6px 12px;
-  border-radius: 10px;
-  backdrop-filter: blur(6px);
+  justify-content: center;
+  gap: 16px;
+  z-index: 999;
+  background: rgba(15,23,42,0.85);
+  padding: 14px 24px;
+  border-bottom: 2px solid rgba(255,255,255,0.1);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 3px 8px rgba(0,0,0,0.35);
 }
 
+/* Logo agak lebih besar dan kontras */
 #logoPerusahaan {
-  height: 150px;
+  height: 90px;
   width: auto;
-  border-radius: 8px;
-  background: white;
-  padding: 4px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.2);
-  transition: height 0.3s ease;
+  border-radius: 10px;
+  background: #fff;
+  padding: 6px;
+  box-shadow: 0 0 12px rgba(255,255,255,0.2),
+              0 0 18px rgba(0,0,0,0.35);
+  transition: all 0.3s ease;
 }
 
+/* Nama perusahaan tampil elegan & mewah */
 #namaPerusahaan {
   font-family: 'Ovidius Script', cursive;
-  font-size: 30px;
-  color: #f5f5f5;
-  text-shadow:
-    0 0 4px rgba(255, 255, 255, 0.25),
-    0 0 8px rgba(180, 220, 255, 0.25);
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: 1.2px;
+  color: #f8f8f8;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.4),
+               0 0 10px rgba(200, 200, 255, 0.25);
+  transition: all 0.3s ease;
 }
 
-
-
+/* Tambahkan ruang agar konten gak ketiban */
+.container {
+  max-width: 1100px;
+  margin: 150px auto 24px auto;
+  padding: 16px;
+}
 
 /* ==== Responsif ==== */
 @media (max-width: 768px) {
-  #logoPerusahaan { height: 65px; }
-  #namaPerusahaan { font-size: 16px; }
+  #headerLogo {
+    padding: 10px 16px;
+    gap: 10px;
+  }
+  #logoPerusahaan { height: 70px; }
+  #namaPerusahaan { font-size: 26px; }
+  .container { margin-top: 110px; }
 }
 
 @media (max-width: 480px) {
-  #logoPerusahaan { height: 50px; }
-  #namaPerusahaan { font-size: 14px; }
+  #headerLogo {
+    padding: 8px 10px;
+    gap: 8px;
+  }
+  #logoPerusahaan { height: 55px; }
+  #namaPerusahaan { font-size: 20px; }
+  .container { margin-top: 95px; }
 }
 
 
