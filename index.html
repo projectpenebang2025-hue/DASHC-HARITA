@@ -105,25 +105,58 @@ input:focus,select:focus{
   padding-top: 20px;
   border-top: 1px dashed var(--border);
 }
-#lokasiInfo {
+body {
+  margin: 0;
+  padding: 0;
+  background: url('Generated_Image.png') no-repeat center center fixed;
+  background-size: 100%; /* mundur dikit */
+  background-position: center top;
+  background-attachment: fixed;
+  color: #f9fafb;
+  font-family: 'Inter', sans-serif;
+}
+
+@media (max-width: 768px) {
+  body {
+    background-attachment: scroll;
+    background-position: center center;
+  }
+}
+
+
+body::before {
+  content: "";
   position: fixed;
-  top: 135px; /* sebelumnya top: 10px */
-  right: 40px;
-  background: var(--card);
-  padding: 8px 14px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45); /* lapisan gelap transparan */
+  z-index: -1;
+}
+
+/* Elemen info biar tetap elegan di atas background */
+#lokasiInfo {
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  color: white;
   border-radius: 12px;
+  padding: 8px 14px;
+  position: absolute;
+  top: 135px;
+  right: 40px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.3);
   font-size: 13px;
-  border: 1px solid var(--border);
-  box-shadow: 0 2px 10px rgba(0,0,0,0.25);
-  z-index: 1000;
-  opacity: 0.95;
   transition: all 0.3s ease;
 }
 
 #lokasiInfo:hover {
-  opacity: 1;
   transform: translateY(-2px);
+  opacity: 1;
 }
+
+
 
 /* ==== LOGO & NAMA PERUSAHAAN ==== */
 /* ==== FONT OVIDIUS SCRIPT ==== */
@@ -283,6 +316,119 @@ input,select,button{
   justify-content: center;
   gap: 10px;
 }
+
+/* === Loader Switcher Bar (Horizontal + Elegan) === */
+#loaderSwitcher {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin: 16px auto 18px auto;
+  box-shadow: 0 0 8px rgba(0,0,0,0.3);
+  scrollbar-width: none;
+}
+#loaderSwitcher::-webkit-scrollbar {
+  display: none;
+}
+
+/* === Tombol Loader === */
+/* === Wrapper untuk Loader Tabs === */
+#loaderTabs {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+/* Satu unit loader (hapus + hijau) */
+.loaderItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Tombol hapus (balok kiri, terpisah) */
+.removeBtn {
+  background: rgba(220,38,38,0.25);
+  border: 1px solid rgba(220,38,38,0.4);
+  color: #fff;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-weight: 600;
+}
+
+.removeBtn:hover {
+  background: rgba(220,38,38,0.5);
+  transform: scale(1.05);
+}
+
+/* Kotak hijau loader */
+.loaderTab {
+  background: #16a34a;
+  color: white;
+  padding: 10px 40px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 10px #16a34a88;
+  transition: all 0.25s ease;
+  text-align: center;
+  min-width: 120px;       /* ukuran tetap */
+  white-space: nowrap;    /* teks gak pecah */
+}
+
+.loaderTab.active {
+  background: #22c55e;
+  box-shadow: 0 0 12px #22c55e88;
+}
+
+/* Tombol tambah (+) */
+#addLoaderBtn {
+  background: rgba(148,163,184,.25);
+  border: 1px solid var(--border);
+  color: #f8fafc;
+  font-size: 20px;
+  padding: 8px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all .25s ease;
+  font-weight: 600;
+}
+
+#addLoaderBtn:hover {
+  background: rgba(22,163,74,0.4);
+  transform: scale(1.05);
+}
+
+#resetLoaderBtn {
+  background-color: #dc2626; /* merah elegan */
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+#resetLoaderBtn:hover {
+  background-color: #ef4444; /* merah lebih terang saat hover */
+  transform: scale(1.03);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.4);
+}
+
+
+
+
+
 </style>
 </head>
 <body>
@@ -340,6 +486,16 @@ input,select,button{
   </div>
 </div>
 <!-- === /TAMBAHAN CHECKER === -->
+
+<div id="loaderSwitcher">
+  <div id="loaderTabs"></div>
+  <button id="addLoaderBtn">+</button>
+</div>
+
+<div style="display:flex; gap:8px; margin-top:10px;">
+  <button id="resetLoaderBtn">Reset Loader</button>
+</div>
+
 
 <div class="row" style="margin-top:8px">
   <div class="col-4">
@@ -408,7 +564,7 @@ input,select,button{
 </div>
 <div class="actions" style="margin-top:12px">
 <button class="btn primary" onclick="simpan()">Simpan (Enter)</button>
-<button class="btn secondary" onclick="resetForm()">Reset</button>
+<!-- <button class="btn secondary" onclick="resetForm()">Reset</button> -->
 </div>
 </div>
 
@@ -546,12 +702,34 @@ function valid(d){
   return'';
 }
 function resetForm(){
-  ['loaderPrefix','loaderNo','haulerPrefix','haulerNo','front','dump','material','bucket'].forEach(id=>{
-    if(id==='front'||id==='material')document.getElementById(id).selectedIndex=0;
-    else document.getElementById(id).value='';
-  });
-  focusFirst();
+  // hanya reset kolom haulerNo dan bucket
+  document.getElementById('haulerPrefix').value = '';
+  document.getElementById('haulerNo').value = '';
+  document.getElementById('bucket').value = '';
+
+  // tetap fokus ke kolom haulerNo biar cepat input lagi
+  document.getElementById('haulerNo').focus();
 }
+
+function resetLoaderSemua() {
+  // hapus semua loader
+  loaderForms = {};
+  localStorage.setItem('loader_forms', JSON.stringify(loaderForms));
+  loaderAktif = null;
+
+  // buat Loader-1 baru
+  tambahLoaderBaru();
+
+  // perbarui tampilan dan isi form
+  updateLoaderTabs();
+  isiFormDariLoader();
+}
+
+// pasang event listener
+document.getElementById('resetLoaderBtn').addEventListener('click', resetLoaderSemua);
+
+
+
 
 // ==== POPUP UTAMA ====
 function showPopup(msg,type='success'){
@@ -622,6 +800,134 @@ document.addEventListener('keydown',e=>{
     e.preventDefault();simpan();
   }
 });
+
+let loaderForms = JSON.parse(localStorage.getItem('loader_forms') || '{}');
+let loaderAktif = null;
+
+function updateLoaderTabs() {
+  const container = document.getElementById('loaderTabs');
+  container.innerHTML = '';
+
+  Object.keys(loaderForms).forEach(id => {
+    const loaderItem = document.createElement('div');
+    loaderItem.className = 'loaderItem';
+
+    // Tombol hapus (kiri)
+    const removeBtn = document.createElement('button');
+    removeBtn.className = 'removeBtn';
+    removeBtn.textContent = '×';
+    removeBtn.onclick = (e) => hapusLoader(id, e);
+
+    // Tombol switch loader
+    const loaderTab = document.createElement('div');
+    loaderTab.className = 'loaderTab';
+    loaderTab.textContent = id.replace('Loader-', 'L');
+
+    // Bedakan warna loader aktif / non-aktif
+    if (id === loaderAktif) {
+      loaderTab.style.backgroundColor = '#22c55e'; // hijau loader aktif
+      loaderTab.style.color = '#fff';
+    } else {
+      loaderTab.style.backgroundColor = '#0f172a'; // hitam / gelap seperti background
+      loaderTab.style.color = '#888'; // teks agak terlihat tapi tetap gelap
+      loaderTab.style.border = '2px solid rgba(255,255,255,0.2)'; // garis tepi abu-abu tipis
+    }
+
+    loaderTab.onclick = () => switchLoader(id);
+
+    loaderItem.appendChild(removeBtn);
+    loaderItem.appendChild(loaderTab);
+    container.appendChild(loaderItem);
+  });
+}
+
+
+function tambahLoaderBaru() {
+  const id = 'Loader-' + (Object.keys(loaderForms).length + 1);
+  loaderForms[id] = {
+    loaderPrefix: '', loaderNo: '', haulerPrefix: '', haulerNo: '',
+    front: '', dump: '', material: '', bucket: ''
+  };
+  localStorage.setItem('loader_forms', JSON.stringify(loaderForms));
+  loaderAktif = id;
+  updateLoaderTabs();
+  isiFormDariLoader();
+}
+
+function switchLoader(id) {
+  if (id === loaderAktif) return; // biar gak reload sama loader
+  simpanFormLoaderAktif();
+  loaderAktif = id;
+  updateLoaderTabs();
+  isiFormDariLoader();
+}
+
+function hapusLoader(id, e) {
+  e.stopPropagation(); // jangan ikut klik tab hijau
+  if (id === 'Loader-1') {
+    showPopup('Loader 1 tidak bisa dihapus sayang ❤️', 'error');
+    return;
+  }
+
+  showConfirm(`Yakin hapus ${id}?`, (ok) => {
+    if (ok) {
+      delete loaderForms[id];
+      localStorage.setItem('loader_forms', JSON.stringify(loaderForms));
+      const sisa = Object.keys(loaderForms);
+      loaderAktif = sisa.length ? sisa[0] : null;
+      updateLoaderTabs();
+      if (loaderAktif) isiFormDariLoader();
+      else resetForm();
+      showPopup(`${id} dihapus!`, 'success');
+    }
+  });
+}
+
+function isiFormDariLoader() {
+  const f = loaderForms[loaderAktif] || {};
+  document.getElementById('loaderPrefix').value = f.loaderPrefix || '';
+  document.getElementById('loaderNo').value = f.loaderNo || '';
+  document.getElementById('haulerPrefix').value = f.haulerPrefix || '';
+  document.getElementById('haulerNo').value = f.haulerNo || '';
+  document.getElementById('front').value = f.front || '';
+  document.getElementById('dump').value = f.dump || '';
+  document.getElementById('material').value = f.material || '';
+  document.getElementById('bucket').value = f.bucket || '';
+}
+
+function simpanFormLoaderAktif() {
+  if (!loaderAktif) return;
+  loaderForms[loaderAktif] = {
+    loaderPrefix: document.getElementById('loaderPrefix').value,
+    loaderNo: document.getElementById('loaderNo').value,
+    haulerPrefix: document.getElementById('haulerPrefix').value,
+    haulerNo: document.getElementById('haulerNo').value,
+    front: document.getElementById('front').value,
+    dump: document.getElementById('dump').value,
+    material: document.getElementById('material').value,
+    bucket: document.getElementById('bucket').value
+  };
+  localStorage.setItem('loader_forms', JSON.stringify(loaderForms));
+}
+
+document.getElementById('addLoaderBtn').addEventListener('click', ()=>{
+  simpanFormLoaderAktif();
+  tambahLoaderBaru();
+});
+
+window.addEventListener('load', ()=>{
+  if (Object.keys(loaderForms).length === 0) tambahLoaderBaru();
+  else {
+    loaderAktif = Object.keys(loaderForms)[0];
+    updateLoaderTabs();
+    isiFormDariLoader();
+  }
+});
+
+setInterval(simpanFormLoaderAktif, 2000);
+
+
+
 
 // ==== TABEL ====
 function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));}
@@ -749,10 +1055,15 @@ if("geolocation"in navigator){
 }
 </script>
 
-
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js')
+    .then(() => console.log('✅ Service Worker aktif, siap offline'))
+    .catch(err => console.error('Service Worker gagal:', err));
+}
+</script>
 
 </script>
 
 </body>
 </html>
-
