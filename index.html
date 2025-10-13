@@ -106,14 +106,21 @@ input:focus,select:focus{
   border-top: 1px dashed var(--border);
 }
 body {
-  margin: 0;
-  padding: 0;
+  height: 100%;
+  background-color: #0f172a; /* warna gelap cadangan */
   background: url('Generated_Image.png') no-repeat center center fixed;
-  background-size: 100%; /* mundur dikit */
+  background-size: 110%; /* biar gak terlalu zoom */
   background-position: center top;
   background-attachment: fixed;
   color: #f9fafb;
   font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Pastikan elemen pembungkus utama ikut gelap */
+main, .container, .content, #app {
+  background: transparent;
 }
 
 @media (max-width: 768px) {
@@ -133,6 +140,12 @@ body::before {
   height: 100%;
   background: rgba(0, 0, 0, 0.45); /* lapisan gelap transparan */
   z-index: -1;
+}
+
+body::after {
+  content: "";
+  display: block;
+  height: 100px; /* penyangga bawah */
 }
 
 /* Elemen info biar tetap elegan di atas background */
@@ -1067,3 +1080,4 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
