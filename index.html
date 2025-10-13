@@ -143,9 +143,14 @@ body::before {
 }
 
 body::after {
-  content: "";
-  display: block;
-  height: 100px; /* penyangga bawah */
+content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45); /* lapisan gelap transparan */
+  z-index: -1;
 }
 
 /* Elemen info biar tetap elegan di atas background */
@@ -1080,4 +1085,5 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
 
