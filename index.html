@@ -155,6 +155,7 @@ body::after {
   z-index: -1;
 }
 
+
 /* Elemen info biar tetap elegan di atas background */
 #lokasiInfo {
   background: rgba(15, 23, 42, 0.6);
@@ -176,6 +177,11 @@ body::after {
   opacity: 1;
 }
 
+.small-input {
+  font-size: 16px;
+  transform: scale(0.9);
+  transform-origin: left center;
+}
 
 
 /* ==== LOGO & NAMA PERUSAHAAN ==== */
@@ -501,6 +507,26 @@ input,select,button{
       <option value="C08">C08</option>
       <option value="C09">C09</option>
       <option value="C10">C10</option>
+      <option value="C01">C11</option>
+      <option value="C02">C12</option>
+      <option value="C03">C13</option>
+      <option value="C04">C14</option>
+      <option value="C05">C15</option>
+      <option value="C06">C16</option>
+      <option value="C07">C17</option>
+      <option value="C08">C18</option>
+      <option value="C09">C19</option>
+      <option value="C10">C20</option>
+      <option value="C01">C21</option>
+      <option value="C02">C22</option>
+      <option value="C03">C23</option>
+      <option value="C04">C24</option>
+      <option value="C05">C25</option>
+      <option value="C06">C26</option>
+      <option value="C07">C27</option>
+      <option value="C08">C28</option>
+      <option value="C09">C29</option>
+      <option value="C10">C30</option>
     </select>
     <div class="chip" id="checkerNow">Belum dipilih</div>
   </div>
@@ -518,45 +544,52 @@ input,select,button{
 
 
 <div class="row" style="margin-top:8px">
-  <div class="col-4">
+    <div class="col-4">
     <label>Loader</label>
     <div style="display:flex;gap:6px">
-      <select id="loaderPrefix" style="width:100px">
+      <select id="loaderPrefix" style="width:100px" onchange="updateLoaderHaulerOutput()">
         <option value="">--</option>
         <option value="AHG">AHG</option>
-        <option value="AKS">AKS</option>
+        <option value="AKs">AKs</option>
         <option value="BKM">BKM</option>
         <option value="BSS">BSS</option>
         <option value="HER">HER</option>
         <option value="KTU">KTU</option>
         <option value="LMP">LMP</option>
         <option value="PIK">PIK</option>
+        <option value="WWP">WWP</option>
       </select>
-      <input id="loaderNo" placeholder="001" style="flex:1" />
+      <input id="loaderNo" placeholder="001" style="flex:1" oninput="updateLoaderHaulerOutput()" />
     </div>
+    <div class="chip" id="loaderOutput" style="margin-top:6px;">–</div>
   </div>
+
   <div class="col-4">
     <label>Hauler</label>
     <div style="display:flex;gap:6px">
-      <select id="haulerPrefix" style="width:100px">
+      <select id="haulerPrefix" style="width:100px" onchange="updateLoaderHaulerOutput()">
         <option value="">--</option>
         <option value="AHG">AHG</option>
-        <option value="AKS">AKS</option>
+        <option value="AKs">AKs</option>
         <option value="BKM">BKM</option>
         <option value="BSS">BSS</option>
         <option value="HER">HER</option>
         <option value="KTU">KTU</option>
         <option value="LMP">LMP</option>
         <option value="PIK">PIK</option>
+        <option value="WWP">WWP</option>
       </select>
-      <input id="haulerNo" placeholder="009" style="flex:1" />
+      <input id="haulerNo" placeholder="009" style="flex:1" oninput="updateLoaderHaulerOutput()" />
     </div>
+    <div class="chip" id="haulerOutput" style="margin-top:6px;">–</div>
   </div>
+
   <div class="col-4">
     <label>Location Front</label>
     <select id="front">
       <option value="">-- Pilih Location --</option>
       <option value="Aluminium">Aluminium</option>
+      <option value="CY">Coal Yard</option>
       <option value="Living Quarter">Living Quarter</option>
       <option value="Power Plant">Power Plant</option>
       <option value="Stone Crusher">Stone Crusher</option>
@@ -695,25 +728,43 @@ function save(arr){localStorage.setItem(KEY,JSON.stringify(arr));}
 
 // ==== FORM ====
 function focusFirst(){document.getElementById('loaderPrefix').focus();}
-function getForm(){
+function getForm() {
   const now = new Date();
-  const shiftInfo = getShiftAndTanggalKerja(); // ← ambil shift & tanggal kerja yang sudah dihitung
+  const shiftInfo = getShiftAndTanggalKerja();
 
-  const loader=(document.getElementById('loaderPrefix').value ? document.getElementById('loaderPrefix').value+'-' : '') + document.getElementById('loaderNo').value.trim();
-  const hauler=(document.getElementById('haulerPrefix').value ? document.getElementById('haulerPrefix').value+'-' : '') + document.getElementById('haulerNo').value.trim();
+  const loaderPrefix = document.getElementById('loaderPrefix').value.trim();
+  const loaderNo = document.getElementById('loaderNo').value.trim();
+  const haulerPrefix = document.getElementById('haulerPrefix').value.trim();
+  const haulerNo = document.getElementById('haulerNo').value.trim();
+
+  // fungsi pencarian di master
+  function findFullCode(prefix, code) {
+    if (!prefix || !code) return '';
+    const list = MASTER_UNITS[prefix];
+    if (!list || list.length === 0) return `${prefix}-${code}`;
+    const found = list.find(item => item.endsWith(`-${code.padStart(3, '0')}`));
+    return found || `${prefix}-${code}`;
+  }
+
+  const loaderFull = findFullCode(loaderPrefix, loaderNo);
+  const haulerFull = findFullCode(haulerPrefix, haulerNo);
+
   return {
-    tanggal: shiftInfo.tanggal, // 🔥 ini diganti dari getTanggal(now)
+    tanggal: shiftInfo.tanggal,
     jam: getJam(now),
     shift: shiftInfo.shift,
-    checker:localStorage.getItem(KEY_CHECKER)||'',
-    loader,hauler,
-    front:document.getElementById('front').value,
-    dump:document.getElementById('dump').value.trim(),
-    material:document.getElementById('material').value.trim(),
-    bucket:Number(document.getElementById('bucket').value||0),
-    lat:lokasiTerakhir.lat, lon:lokasiTerakhir.lon
+    checker: localStorage.getItem(KEY_CHECKER) || '',
+    loader: loaderFull,
+    hauler: haulerFull,
+    front: document.getElementById('front').value,
+    dump: document.getElementById('dump').value.trim(),
+    material: document.getElementById('material').value.trim(),
+    bucket: Number(document.getElementById('bucket').value || 0),
+    lat: lokasiTerakhir.lat,
+    lon: lokasiTerakhir.lon
   };
 }
+
 function valid(d){
   if(!d.loader)return'Loader wajib diisi';
   if(!d.hauler)return'Hauler wajib diisi';
@@ -725,7 +776,7 @@ function resetForm(){
   // hanya reset kolom haulerNo dan bucket
   document.getElementById('haulerPrefix').value = '';
   document.getElementById('haulerNo').value = '';
-  document.getElementById('bucket').value = '';
+  // document.getElementById('bucket').value = '';
 
   // tetap fokus ke kolom haulerNo biar cepat input lagi
   document.getElementById('haulerNo').focus();
@@ -748,6 +799,42 @@ function resetLoaderSemua() {
 // pasang event listener
 document.getElementById('resetLoaderBtn').addEventListener('click', resetLoaderSemua);
 
+// === Load JSON master unit ===
+let MASTER_UNITS = {};
+
+fetch('Master_Unit.json')
+  .then(res => res.json())
+  .then(data => {
+    MASTER_UNITS = data;
+  })
+  .catch(err => console.error("Gagal load Master_Unit.json:", err));
+
+// === Fungsi Update Loader dan Hauler Output ===
+function updateLoaderHaulerOutput() {
+  const loaderGroup = document.getElementById('loaderPrefix').value.trim(); // contoh: AKs
+  const loaderCode = document.getElementById('loaderNo').value.trim();      // contoh: 106
+
+  const haulerGroup = document.getElementById('haulerPrefix').value.trim();
+  const haulerCode = document.getElementById('haulerNo').value.trim();
+
+  // Fungsi pencarian kode lengkap dari master unit
+  function findFullCode(prefix, shortCode) {
+    if (!prefix || !shortCode) return '';
+    const list = MASTER_UNITS[prefix];
+    if (!list || list.length === 0) return null;
+
+    // Cari unit yang cocok dengan 3 digit terakhir
+    const found = list.find(item => item.endsWith(`-${shortCode.padStart(3, '0')}`));
+    return found || null;
+  }
+
+  const loaderFull = findFullCode(loaderGroup, loaderCode);
+  const haulerFull = findFullCode(haulerGroup, haulerCode);
+
+  // Update output
+  document.getElementById('loaderOutput').textContent = loaderFull || `${loaderGroup}-${loaderCode}`;
+  document.getElementById('haulerOutput').textContent = haulerFull || `${haulerGroup}-${haulerCode}`;
+}
 
 
 
@@ -946,34 +1033,76 @@ window.addEventListener('load', ()=>{
 
 setInterval(simpanFormLoaderAktif, 2000);
 
-
-
-
 // ==== TABEL ====
-function escapeHtml(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));}
+function escapeHtml(s){
+  return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]));
+}
+
 function render(){
-  const tbody=document.getElementById('tbody');tbody.innerHTML='';
-  const arr=load();
-  const fs=document.getElementById('filterShift').value;
-  const fd=document.getElementById('filterDate').value;
-  let data=arr;
-  if(fs)data=data.filter(x=>String(x.shift)===String(fs));
-  if(fd)data=data.filter(x=>x.tanggal===fd);
-  document.getElementById('totalInfo').textContent=`${data.length} data`;
-  data.forEach((r,idx)=>{
-    const tr=document.createElement('tr');
-    const badge=`<span class="badge ${r.shift==1?'s1':'s2'}">${r.shift==1?'Shift 1':'Shift 2'}</span>`;
-    tr.innerHTML=`<td>${idx+1}</td><td>${r.tanggal}</td><td>${r.jam}</td><td>${badge}</td>
-    <td>${escapeHtml(r.checker||'')}</td><td>${escapeHtml(r.loader)}</td>
-    <td>${escapeHtml(r.hauler)}</td><td>${escapeHtml(r.front)}</td>
-    <td>${escapeHtml(r.dump)}</td><td>${escapeHtml(r.material)}</td>
-    <td>${Number(r.bucket)||0}</td>
-    <td>${r.lat?r.lat.toFixed(5):'-'}</td><td>${r.lon?r.lon.toFixed(5):'-'}</td>
-    <td><button class="btn danger" onclick="hapusModern(${idx},this)">Hapus</button></td>`;
+  const tbody = document.getElementById('tbody');
+  tbody.innerHTML = '';
+
+  const arr = load();
+  const fs = document.getElementById('filterShift').value;
+  const fd = document.getElementById('filterDate').value;
+
+  let data = arr;
+  if(fs) data = data.filter(x => String(x.shift) === String(fs));
+  if(fd) data = data.filter(x => x.tanggal === fd);
+
+  document.getElementById('totalInfo').textContent = `${data.length} data`;
+
+  data.forEach((r, idx) => {
+    // --- 🧠 COCOKKAN DENGAN MASTER UNIT JIKA ADA ---
+    function fixUnit(prefix, codeOrFull) {
+      if (!prefix || !MASTER_UNITS[prefix]) return codeOrFull;
+      const short = codeOrFull.split('-').pop();
+      const found = MASTER_UNITS[prefix].find(x => x.endsWith(`-${short.padStart(3, '0')}`));
+      return found || codeOrFull;
+    }
+
+    // Perbaiki loader jika ada di master unit
+    if (r.loader && r.loader.includes('-')) {
+      const prefix = r.loader.split('-')[0];
+      r.loader = fixUnit(prefix, r.loader);
+    }
+
+    // Perbaiki hauler jika ada di master unit
+    if (r.hauler && r.hauler.includes('-')) {
+      const prefix = r.hauler.split('-')[0];
+      r.hauler = fixUnit(prefix, r.hauler);
+    }
+
+    // --- 🧩 BUAT BARIS TABEL ---
+    const tr = document.createElement('tr');
+    const badge = `<span class="badge ${r.shift==1?'s1':'s2'}">${r.shift==1?'Shift 1':'Shift 2'}</span>`;
+
+    tr.innerHTML = `
+      <td>${idx+1}</td>
+      <td>${r.tanggal}</td>
+      <td>${r.jam}</td>
+      <td>${badge}</td>
+      <td>${escapeHtml(r.checker||'')}</td>
+      <td>${escapeHtml(r.loader)}</td>
+      <td>${escapeHtml(r.hauler)}</td>
+      <td>${escapeHtml(r.front)}</td>
+      <td>${escapeHtml(r.dump)}</td>
+      <td>${escapeHtml(r.material)}</td>
+      <td>${Number(r.bucket)||0}</td>
+      <td>${r.lat?r.lat.toFixed(5):'-'}</td>
+      <td>${r.lon?r.lon.toFixed(5):'-'}</td>
+      <td><button class="btn danger" onclick="hapusModern(${idx},this)">Hapus</button></td>
+    `;
     tbody.appendChild(tr);
   });
 }
-function clearFilter(){document.getElementById('filterShift').value='';document.getElementById('filterDate').value='';render();}
+
+function clearFilter(){
+  document.getElementById('filterShift').value = '';
+  document.getElementById('filterDate').value = '';
+  render();
+}
+
 
 // ==== HAPUS ====
 function hapusModern(i,btn){
@@ -1087,6 +1216,3 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
-
-
-
