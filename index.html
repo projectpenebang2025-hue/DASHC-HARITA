@@ -183,6 +183,28 @@ body::after {
   transform-origin: left center;
 }
 
+/* Biar hasil output loader/hauler gak kayak balon di HP */
+.chip {
+  display: inline-block;
+  font-size: 14px;           /* kecilin tulisan */
+  padding: 6px 10px;         /* kurangi ruang dalam */
+  border-radius: 2px;
+  background: #0f172a;       /* sama kayak tema gelap */
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+  word-break: break-word;    /* biar gak keluar layar */
+  white-space: normal;
+}
+
+/* biar gak membesar pas diklik di HP */
+.chip:focus {
+  outline: none;
+  transform: scale(1);
+}
+
+
 
 /* ==== LOGO & NAMA PERUSAHAAN ==== */
 /* ==== FONT OVIDIUS SCRIPT ==== */
