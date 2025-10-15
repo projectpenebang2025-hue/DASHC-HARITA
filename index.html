@@ -183,6 +183,16 @@ body::after {
   transform-origin: left center;
 }
 
+  /* --- Cegah auto zoom di input saat diklik di HP --- */
+@media (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px !important; /* batas aman biar HP gak zoom */
+  }
+}
+
+
 /* Biar hasil output loader/hauler gak kayak balon di HP */
 .chip {
   display: inline-block;
@@ -1242,4 +1252,5 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
+
 
