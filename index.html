@@ -183,7 +183,7 @@ body::after {
   transform-origin: left center;
 }
 
-  /* --- Cegah auto zoom di input saat diklik di HP --- */
+/* --- Cegah auto zoom di input saat diklik di HP --- */
 @media (max-width: 768px) {
   input,
   select,
@@ -510,7 +510,6 @@ input,select,button{
 <div class="actions">
 <button class="btn secondary" id="btnShift1" onclick="setShift(1)">Shift 1</button>
 <button class="btn secondary" id="btnShift2" onclick="setShift(2)">Shift 2</button>
-<span id="shiftNow" class="chip">Aktif: 1</span>
 </div>
 </div>
 <div class="col-4">
@@ -539,26 +538,26 @@ input,select,button{
       <option value="C08">C08</option>
       <option value="C09">C09</option>
       <option value="C10">C10</option>
-      <option value="C01">C11</option>
-      <option value="C02">C12</option>
-      <option value="C03">C13</option>
-      <option value="C04">C14</option>
-      <option value="C05">C15</option>
-      <option value="C06">C16</option>
-      <option value="C07">C17</option>
-      <option value="C08">C18</option>
-      <option value="C09">C19</option>
-      <option value="C10">C20</option>
-      <option value="C01">C21</option>
-      <option value="C02">C22</option>
-      <option value="C03">C23</option>
-      <option value="C04">C24</option>
-      <option value="C05">C25</option>
-      <option value="C06">C26</option>
-      <option value="C07">C27</option>
-      <option value="C08">C28</option>
-      <option value="C09">C29</option>
-      <option value="C10">C30</option>
+      <option value="C11">C11</option>
+      <option value="C12">C12</option>
+      <option value="C13">C13</option>
+      <option value="C14">C14</option>
+      <option value="C15">C15</option>
+      <option value="C16">C16</option>
+      <option value="C17">C17</option>
+      <option value="C18">C18</option>
+      <option value="C19">C19</option>
+      <option value="C20">C20</option>
+      <option value="C21">C21</option>
+      <option value="C22">C22</option>
+      <option value="C23">C23</option>
+      <option value="C24">C24</option>
+      <option value="C25">C25</option>
+      <option value="C26">C26</option>
+      <option value="C27">C27</option>
+      <option value="C28">C28</option>
+      <option value="C29">C29</option>
+      <option value="C30">C30</option>
     </select>
     <div class="chip" id="checkerNow">Belum dipilih</div>
   </div>
@@ -744,7 +743,6 @@ const KEY_CHECKER='CHECKER_ID';
 // ==== SHIFT ====
 function setShift(n){
   SHIFT_AKTIF=(n===2)?2:1;
-  document.getElementById('shiftNow').textContent=`Aktif: ${SHIFT_AKTIF}`;
   document.getElementById('btnShift1').style.outline=SHIFT_AKTIF===1?'2px solid var(--accent)':'none';
   document.getElementById('btnShift2').style.outline=SHIFT_AKTIF===2?'2px solid var(--accent)':'none';
   focusFirst();
@@ -1252,5 +1250,3 @@ if ('serviceWorker' in navigator) {
 
 </body>
 </html>
-
-
